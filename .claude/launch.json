@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "digest-pwa",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8092", "--directory", "/Users/hamishgraham/Desktop/digest-pwa"],
+      "port": 8092
+    }
+  ]
+}
