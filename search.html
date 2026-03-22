@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Briefing">
+  <meta name="theme-color" content="#FFFFFF">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="stylesheet" href="style.css">
+  <title>Stock Research — Morning Briefing</title>
+</head>
+<body>
+
+  <div class="header">
+    <div>
+      <div class="header-title">Stock Research</div>
+      <div class="header-date">Search any ASX or US stock for a full evaluation</div>
+    </div>
+    <button class="theme-toggle" onclick="toggleTheme()">Dark</button>
+  </div>
+
+  <div class="search-container">
+    <div class="search-bar">
+      <input type="text" class="search-input" id="tickerInput"
+             placeholder="Enter ticker (e.g. WDS, AAPL, NDQ)"
+             autocapitalize="characters" autocomplete="off" spellcheck="false">
+      <button class="search-btn" id="searchBtn" onclick="searchStock()">Search</button>
+    </div>
+
+    <div id="loading" class="loading" style="display:none;">
+      <div class="spinner"></div>
+      <div>Researching stock data...</div>
+      <div style="font-size:0.78rem; margin-top:4px;">This may take a moment</div>
+    </div>
+
+    <div id="results"></div>
+
+    <div id="recentSearches" class="recent-searches">
+      <div class="recent-title">Recent Searches</div>
+      <div id="recentList"></div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <a href="index.html" class="nav-btn">
+      <span class="nav-btn-icon">&#9783;</span>
+      <span>Digest</span>
+    </a>
+    <a href="markets.html" class="nav-btn">
+      <span class="nav-btn-icon">&#128200;</span>
+      <span>Markets</span>
+    </a>
+    <a href="search.html" class="nav-btn active">
+      <span class="nav-btn-icon">&#128270;</span>
+      <span>Stocks</span>
+    </a>
+  </div>
+
+  <script>
+    // Theme
+    function toggleTheme() {
+      const body = document.body;
+      const btn = document.querySelector('.theme-toggle');
+      const meta = document.querySelector('meta[name="theme-color"]');
+      if (body.getAttribute('data-theme') === 'dark') {
+        body.removeAttribute('data-theme');
+        btn.textContent = 'Dark';
+        meta.content = '#FFFFFF';
+      } else {
+        body.setAttribute('data-theme', 'dark');
+        btn.textContent = 'Light';
+        meta.content = '#1A1A1A';
+      }
+      localStorage.setItem('theme', body.getAttribute('data-theme') || 'light');
+    }
+    if (localStorage.getItem('theme') === 'dark') {
+      document.body.setAttribute('data-theme', 'dark');
+      document.querySelector('.theme-toggle').textContent = 'Light';
+      document.querySelector('meta[name="theme-color"]').content = '#1A1A1A';
+    }
+
+    // Recent searches
+    function getRecent() {
+      try { return JSON.parse(localStorage.getItem('recentStocks') || '[]'); } catch { return []; }
+    }
+    function saveRecent(ticker, name) {
+      let recent = getRecent().filter(r => r.ticker !== ticker);
+      recent.unshift({ ticker, name, date: new Date().toLocaleDateString() });
+      if (recent.length > 10) recent = recent.slice(0, 10);
+      localStorage.setItem('recentStocks', JSON.stringify(recent));
+      renderRecent();
+    }
+    function renderRecent() {
+      const list = document.getElementById('recentList');
+      const recent = getRecent();
+      if (recent.length === 0) {
+        list.innerHTML = '<div style="color:var(--text-secondary);font-size:0.85rem;padding:8px 0;">No recent searches yet</div>';
+        return;
+      }
+      list.innerHTML = recent.map(r => `
+        <div class="recent-item" onclick="document.getElementById('tickerInput').value='${r.ticker}';searchStock();">
+          <div>
+            <div class="recent-item-ticker">${r.ticker}</div>
+            <div class="recent-item-name">${r.name || ''} &middot; ${r.date}</div>
+          </div>
+          <div class="recent-item-arrow">&#8250;</div>
+        </div>
+      `).join('');
+    }
+    renderRecent();
+
+    // Enter key triggers search
+    document.getElementById('tickerInput').addEventListener('keydown', e => {
+      if (e.key === 'Enter') searchStock();
+    });
+
+    // Stock search — calls local Python API server
+    const API_BASE = 'http://localhost:8093';
+
+    async function searchStock() {
+      const ticker = document.getElementById('tickerInput').value.trim().toUpperCase();
+      if (!ticker) return;
+
+      const loading = document.getElementById('loading');
+      const results = document.getElementById('results');
+      const btn = document.getElementById('searchBtn');
+
+      loading.style.display = 'block';
+      results.innerHTML = '';
+      btn.disabled = true;
+
+      try {
+        const resp = await fetch(`${API_BASE}/api/stock/${encodeURIComponent(ticker)}`);
+        if (!resp.ok) {
+          const err = await resp.json().catch(() => ({}));
+          if (resp.status === 404) {
+            results.innerHTML = `
+              <div class="empty-state">
+                <div class="empty-state-icon">&#128269;</div>
+                <div class="empty-state-text">Couldn't find data for "${ticker}".<br>Try an ASX ticker (e.g. WDS.AX) or US ticker (e.g. AAPL).</div>
+              </div>`;
+            return;
+          }
+          throw new Error(err.error || 'API error');
+        }
+
+        const data = await resp.json();
+        const stockName = data.chart?.name || data.fundamentals?.sector || ticker;
+        saveRecent(ticker, stockName);
+        results.innerHTML = buildReport(data);
+
+      } catch (err) {
+        const isNetworkErr = err.message === 'Failed to fetch';
+        results.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon">${isNetworkErr ? '&#128268;' : '&#9888;&#65039;'}</div>
+            <div class="empty-state-text">${isNetworkErr
+              ? 'Stock API not running.<br>Start it with: <code style="background:var(--bg-card);padding:4px 8px;border-radius:4px;">python3 stock_api.py</code>'
+              : 'Error: ' + err.message}</div>
+          </div>`;
+      } finally {
+        loading.style.display = 'none';
+        btn.disabled = false;
+      }
+    }
+
+    function buildReport(data) {
+      const chart = data.chart;
+      const fund = data.fundamentals;
+      const verdict = data.verdict;
+      const sentiment = data.sentiment;
+
+      const ticker = data.ticker;
+      const price = chart?.price?.toFixed(2) || '—';
+      const currency = chart?.currency || 'USD';
+      const change = chart?.change;
+      const changeStr = change != null ? (change >= 0 ? `+${change.toFixed(2)}%` : `${change.toFixed(2)}%`) : '—';
+      const changeClass = change > 0 ? 'up' : change < 0 ? 'down' : '';
+      const name = chart?.name || ticker;
+      const exchange = chart?.exchange || '';
+
+      let metricsHtml = '';
+
+      // Price metrics
+      if (chart) {
+        metricsHtml += `<div class="stock-section-title">Price Action (3 Month)</div>`;
+        metricsHtml += metric('Current Price', `${currency} ${price}`);
+        metricsHtml += metric('Day Change', `<span class="${changeClass === 'up' ? 'text-green' : changeClass === 'down' ? 'text-red' : ''}">${changeStr}</span>`);
+        metricsHtml += metric('3M High', `${currency} ${chart.high3m}`);
+        metricsHtml += metric('3M Low', `${currency} ${chart.low3m}`);
+        metricsHtml += metric('3M Trend', chart.trend);
+        metricsHtml += metric('Annualised Volatility', `${chart.annualVol}%`);
+        if (chart.fiftyTwoWeekHigh) metricsHtml += metric('52W High', `${currency} ${chart.fiftyTwoWeekHigh.toFixed(2)}`);
+        if (chart.fiftyTwoWeekLow) metricsHtml += metric('52W Low', `${currency} ${chart.fiftyTwoWeekLow.toFixed(2)}`);
+      }
+
+      // Fundamentals
+      if (fund?.pe || fund?.pb || fund?.dividendYield || fund?.marketCap) {
+        metricsHtml += `<div class="stock-section-title">Fundamentals</div>`;
+        if (fund.marketCap) metricsHtml += metric('Market Cap', fund.marketCap);
+        if (fund.pe) metricsHtml += metric('P/E Ratio', fund.pe);
+        if (fund.pb) metricsHtml += metric('Price/Book', fund.pb);
+        if (fund.dividendYield) metricsHtml += metric('Dividend Yield', fund.dividendYield);
+        if (fund.profitMargin) metricsHtml += metric('Profit Margin', fund.profitMargin);
+        if (fund.revenueGrowth) metricsHtml += metric('Revenue Growth', fund.revenueGrowth);
+        if (fund.beta) metricsHtml += metric('Beta', fund.beta);
+      }
+
+      // Analyst targets
+      if (fund?.targetPrice || fund?.analystBuy != null) {
+        metricsHtml += `<div class="stock-section-title">Analyst View</div>`;
+        if (fund.targetPrice) metricsHtml += metric('Mean Target', `${currency} ${fund.targetPrice}`);
+        if (fund.targetHigh) metricsHtml += metric('High Target', `${currency} ${fund.targetHigh}`);
+        if (fund.targetLow) metricsHtml += metric('Low Target', `${currency} ${fund.targetLow}`);
+        if (fund.analystBuy != null) {
+          metricsHtml += metric('Buy / Hold / Sell', `${fund.analystBuy} / ${fund.analystHold} / ${fund.analystSell}`);
+        }
+      }
+
+      // News Sentiment
+      let sentimentHtml = '';
+      if (sentiment?.articles?.length) {
+        const sentLabel = sentiment.label;
+        const sentClass = sentiment.score > 0.05 ? 'text-green' : sentiment.score < -0.05 ? 'text-red' : '';
+        sentimentHtml += `<div class="stock-section-title">News Sentiment</div>`;
+        sentimentHtml += metric('Overall', `<span class="${sentClass}" style="font-weight:700;">${sentLabel}</span>`);
+        sentimentHtml += metric('Coverage', `${sentiment.positive} positive &middot; ${sentiment.neutral} neutral &middot; ${sentiment.negative} negative`);
+        sentimentHtml += `<div style="margin-top:8px;">`;
+        for (const a of sentiment.articles.slice(0, 8)) {
+          const icon = a.sentiment > 0.1 ? '&#9650;' : a.sentiment < -0.1 ? '&#9660;' : '&#9679;';
+          const color = a.sentiment > 0.1 ? 'var(--green)' : a.sentiment < -0.1 ? 'var(--red)' : 'var(--text-secondary)';
+          const src = a.source ? ` <span style="color:var(--text-secondary);font-size:0.7rem;">${a.source}</span>` : '';
+          sentimentHtml += `<div style="display:flex;gap:8px;padding:5px 0;border-bottom:1px solid var(--border);font-size:0.8rem;line-height:1.3;">
+            <span style="color:${color};flex-shrink:0;margin-top:2px;">${icon}</span>
+            <span style="color:var(--text);">${a.title}${src}</span>
+          </div>`;
+        }
+        sentimentHtml += `</div>`;
+      }
+
+      // Company info
+      let companyHtml = '';
+      if (fund?.sector || fund?.industry) {
+        companyHtml = `<div class="stock-section-title">Company</div>`;
+        if (fund.sector) companyHtml += metric('Sector', fund.sector);
+        if (fund.industry) companyHtml += metric('Industry', fund.industry);
+      }
+      if (fund?.summary) {
+        companyHtml += `<div class="stock-section-title">About</div>
+          <div class="stock-narrative"><p>${fund.summary}</p></div>`;
+      }
+
+      // Mini price chart
+      let chartHtml = '';
+      if (chart?.closes?.length > 5) {
+        chartHtml = buildMiniChart(chart.closes);
+      }
+
+      return `
+        <div class="stock-report">
+          <div class="stock-report-header">
+            <div class="stock-ticker">${ticker}</div>
+            <div class="stock-name">${name} &middot; ${exchange}</div>
+            <div class="stock-price-row">
+              <span class="stock-price">${currency} ${price}</span>
+              <span class="stock-change ${changeClass}">${changeStr}</span>
+            </div>
+          </div>
+          <div class="stock-report-body">
+            <div class="stock-verdict ${verdict.verdict}">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span>${verdict.label || verdict.text}</span>
+                ${verdict.score != null ? `<span style="font-size:1.5rem;font-weight:800;">${verdict.score}<span style="font-size:0.7rem;font-weight:400;">/100</span></span>` : ''}
+              </div>
+            </div>
+            ${verdict.signals?.length ? `<div style="margin-bottom:12px;">${verdict.signals.map(s => `<div style="font-size:0.8rem;color:var(--text-secondary);padding:2px 0;">&#8226; ${s}</div>`).join('')}</div>` : ''}
+            ${chartHtml}
+            ${metricsHtml}
+            ${sentimentHtml}
+            ${companyHtml}
+          </div>
+        </div>`;
+    }
+
+    function metric(label, value) {
+      return `<div class="stock-metric"><span class="stock-metric-label">${label}</span><span class="stock-metric-value">${value}</span></div>`;
+    }
+
+    function buildMiniChart(closes) {
+      const canvas = document.createElement('canvas');
+      const width = 320;
+      const height = 120;
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+
+      const min = Math.min(...closes);
+      const max = Math.max(...closes);
+      const range = max - min || 1;
+      const padding = 10;
+      const chartW = width - padding * 2;
+      const chartH = height - padding * 2;
+
+      // Background
+      ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--bg-card').trim() || '#F8F8F8';
+      ctx.fillRect(0, 0, width, height);
+
+      // Line
+      const isUp = closes[closes.length - 1] >= closes[0];
+      ctx.strokeStyle = isUp ? '#1B7A3D' : '#B83227';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      closes.forEach((c, i) => {
+        const x = padding + (i / (closes.length - 1)) * chartW;
+        const y = padding + chartH - ((c - min) / range) * chartH;
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      });
+      ctx.stroke();
+
+      // Gradient fill
+      ctx.lineTo(padding + chartW, padding + chartH);
+      ctx.lineTo(padding, padding + chartH);
+      ctx.closePath();
+      const grad = ctx.createLinearGradient(0, 0, 0, height);
+      grad.addColorStop(0, isUp ? 'rgba(27,122,61,0.15)' : 'rgba(184,50,39,0.15)');
+      grad.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      return `<div class="stock-section-title">3-Month Price Chart</div>
+        <img src="${canvas.toDataURL()}" style="width:100%;border-radius:8px;margin-bottom:12px;" alt="Price chart">`;
+    }
+
+    // Auto-search from URL param (e.g. search.html?ticker=AAPL)
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlTicker = urlParams.get('ticker');
+    if (urlTicker) {
+      document.getElementById('tickerInput').value = urlTicker;
+      searchStock();
+    }
+
+    // Service worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+  </script>
+
+</body>
+</html>

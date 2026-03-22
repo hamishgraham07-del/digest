@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Briefing">
+  <meta name="theme-color" content="#FFFFFF">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="stylesheet" href="style.css">
+  <title>Markets — Morning Briefing</title>
+</head>
+<body>
+
+  <div class="header">
+    <div>
+      <div class="header-title">Markets</div>
+      <div class="header-date" id="lastUpdated">Loading live data...</div>
+    </div>
+    <button class="theme-toggle" onclick="toggleTheme()">Dark</button>
+  </div>
+
+  <div style="padding: 12px 16px 80px;">
+
+    <!-- Category tabs -->
+    <div class="market-tabs" id="marketTabs">
+      <button class="market-tab active" onclick="showCategory('all')">All</button>
+      <button class="market-tab" onclick="showCategory('indices')">Indices</button>
+      <button class="market-tab" onclick="showCategory('commodities')">Commodities</button>
+      <button class="market-tab" onclick="showCategory('crypto')">Crypto</button>
+      <button class="market-tab" onclick="showCategory('forex')">Forex</button>
+      <button class="market-tab" onclick="showCategory('watchlist')">My Watchlist</button>
+    </div>
+
+    <div id="loading" class="loading">
+      <div class="spinner"></div>
+      <div>Fetching live prices...</div>
+    </div>
+
+    <div id="marketList"></div>
+
+    <!-- Add to watchlist -->
+    <div id="addWatchlist" style="display:none; margin-top:16px;">
+      <div class="search-bar">
+        <input type="text" class="search-input" id="addTickerInput"
+               placeholder="Add ticker (e.g. TSLA, BHP.AX)"
+               autocapitalize="characters" autocomplete="off">
+        <button class="search-btn" onclick="addToWatchlist()">Add</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <a href="index.html" class="nav-btn">
+      <span class="nav-btn-icon">&#9783;</span>
+      <span>Digest</span>
+    </a>
+    <a href="markets.html" class="nav-btn active">
+      <span class="nav-btn-icon">&#128200;</span>
+      <span>Markets</span>
+    </a>
+    <a href="search.html" class="nav-btn">
+      <span class="nav-btn-icon">&#128270;</span>
+      <span>Stocks</span>
+    </a>
+  </div>
+
+  <style>
+    .market-tabs {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 4px 0 12px;
+      scrollbar-width: none;
+    }
+    .market-tabs::-webkit-scrollbar { display: none; }
+    .market-tab {
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: var(--bg);
+      color: var(--text-secondary);
+      font-size: 0.78rem;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .market-tab.active {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+    .market-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      margin-bottom: 8px;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+    }
+    .market-card:active { opacity: 0.8; }
+    .market-left { flex: 1; }
+    .market-ticker {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .market-name {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+    .market-right { text-align: right; }
+    .market-price {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .market-change {
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .market-change.up { color: var(--green); }
+    .market-change.down { color: var(--red); }
+    .market-change.flat { color: var(--neutral); }
+    .market-category-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-secondary);
+      margin: 16px 0 8px;
+    }
+    .market-category-title:first-child { margin-top: 0; }
+    .watchlist-remove {
+      background: none;
+      border: none;
+      color: var(--red);
+      font-size: 0.75rem;
+      padding: 4px 8px;
+      cursor: pointer;
+    }
+  </style>
+
+  <script>
+    const API_BASE = 'http://localhost:8093';
+
+    // Default market assets by category
+    const MARKETS = {
+      indices: [
+        {ticker: '^GSPC', name: 'S&P 500', cat: 'indices'},
+        {ticker: '^IXIC', name: 'NASDAQ Composite', cat: 'indices'},
+        {ticker: '^DJI', name: 'Dow Jones', cat: 'indices'},
+        {ticker: '^FTSE', name: 'FTSE 100', cat: 'indices'},
+        {ticker: '^N225', name: 'Nikkei 225', cat: 'indices'},
+        {ticker: '^AXJO', name: 'ASX 200', cat: 'indices'},
+        {ticker: '^HSI', name: 'Hang Seng', cat: 'indices'},
+        {ticker: '^GDAXI', name: 'DAX 40', cat: 'indices'},
+        {ticker: '^FCHI', name: 'CAC 40', cat: 'indices'},
+        {ticker: '^STOXX50E', name: 'Euro Stoxx 50', cat: 'indices'},
+        {ticker: '^BSESN', name: 'Sensex', cat: 'indices'},
+        {ticker: '^KS11', name: 'KOSPI', cat: 'indices'},
+      ],
+      commodities: [
+        {ticker: 'GC=F', name: 'Gold (USD/oz)', cat: 'commodities'},
+        {ticker: 'SI=F', name: 'Silver (USD/oz)', cat: 'commodities'},
+        {ticker: 'BZ=F', name: 'Brent Crude (USD/bbl)', cat: 'commodities'},
+        {ticker: 'CL=F', name: 'WTI Crude (USD/bbl)', cat: 'commodities'},
+        {ticker: 'NG=F', name: 'Natural Gas', cat: 'commodities'},
+        {ticker: 'HG=F', name: 'Copper', cat: 'commodities'},
+      ],
+      crypto: [
+        {ticker: 'BTC-USD', name: 'Bitcoin', cat: 'crypto'},
+        {ticker: 'ETH-USD', name: 'Ethereum', cat: 'crypto'},
+        {ticker: 'SOL-USD', name: 'Solana', cat: 'crypto'},
+        {ticker: 'XRP-USD', name: 'XRP', cat: 'crypto'},
+        {ticker: 'ADA-USD', name: 'Cardano', cat: 'crypto'},
+      ],
+      forex: [
+        {ticker: 'AUDUSD=X', name: 'AUD/USD', cat: 'forex'},
+        {ticker: 'EURUSD=X', name: 'EUR/USD', cat: 'forex'},
+        {ticker: 'GBPUSD=X', name: 'GBP/USD', cat: 'forex'},
+        {ticker: 'USDJPY=X', name: 'USD/JPY', cat: 'forex'},
+        {ticker: 'USDCNY=X', name: 'USD/CNY', cat: 'forex'},
+        {ticker: 'AUDJPY=X', name: 'AUD/JPY', cat: 'forex'},
+      ],
+    };
+
+    let allData = {};
+    let currentCategory = 'all';
+
+    // Theme
+    function toggleTheme() {
+      const body = document.body;
+      const btn = document.querySelector('.theme-toggle');
+      const meta = document.querySelector('meta[name="theme-color"]');
+      if (body.getAttribute('data-theme') === 'dark') {
+        body.removeAttribute('data-theme');
+        btn.textContent = 'Dark';
+        meta.content = '#FFFFFF';
+      } else {
+        body.setAttribute('data-theme', 'dark');
+        btn.textContent = 'Light';
+        meta.content = '#1A1A1A';
+      }
+      localStorage.setItem('theme', body.getAttribute('data-theme') || 'light');
+    }
+    if (localStorage.getItem('theme') === 'dark') {
+      document.body.setAttribute('data-theme', 'dark');
+      document.querySelector('.theme-toggle').textContent = 'Light';
+      document.querySelector('meta[name="theme-color"]').content = '#1A1A1A';
+    }
+
+    // Watchlist
+    function getWatchlist() {
+      try { return JSON.parse(localStorage.getItem('marketWatchlist') || '[]'); } catch { return []; }
+    }
+    function saveWatchlist(list) {
+      localStorage.setItem('marketWatchlist', JSON.stringify(list));
+    }
+    function addToWatchlist() {
+      const input = document.getElementById('addTickerInput');
+      const ticker = input.value.trim().toUpperCase();
+      if (!ticker) return;
+      let wl = getWatchlist();
+      if (!wl.find(w => w.ticker === ticker)) {
+        wl.push({ticker, name: ticker, cat: 'watchlist'});
+        saveWatchlist(wl);
+        input.value = '';
+        fetchAndRender();
+      }
+    }
+    function removeFromWatchlist(ticker) {
+      let wl = getWatchlist().filter(w => w.ticker !== ticker);
+      saveWatchlist(wl);
+      fetchAndRender();
+    }
+    document.getElementById('addTickerInput')?.addEventListener('keydown', e => {
+      if (e.key === 'Enter') addToWatchlist();
+    });
+
+    // Fetch all market data
+    async function fetchAllMarkets() {
+      const allAssets = [
+        ...MARKETS.indices, ...MARKETS.commodities,
+        ...MARKETS.crypto, ...MARKETS.forex,
+        ...getWatchlist()
+      ];
+
+      // Fetch in batches of 6 to not overwhelm the API
+      const results = {};
+      const batchSize = 6;
+      for (let i = 0; i < allAssets.length; i += batchSize) {
+        const batch = allAssets.slice(i, i + batchSize);
+        const promises = batch.map(async (asset) => {
+          try {
+            const resp = await fetch(`${API_BASE}/api/stock/${encodeURIComponent(asset.ticker)}?quick=1`);
+            if (resp.ok) {
+              const data = await resp.json();
+              results[asset.ticker] = {
+                ...asset,
+                price: data.chart?.price,
+                change: data.chart?.change,
+                currency: data.chart?.currency || '',
+                trend: data.chart?.trend,
+              };
+            }
+          } catch {}
+        });
+        await Promise.all(promises);
+      }
+      return results;
+    }
+
+    function showCategory(cat) {
+      currentCategory = cat;
+      document.querySelectorAll('.market-tab').forEach(t => t.classList.remove('active'));
+      event.target.classList.add('active');
+      document.getElementById('addWatchlist').style.display = cat === 'watchlist' ? 'block' : 'none';
+      renderMarkets();
+    }
+
+    function renderMarkets() {
+      const list = document.getElementById('marketList');
+      let html = '';
+
+      const categories = currentCategory === 'all'
+        ? ['indices', 'commodities', 'crypto', 'forex', 'watchlist']
+        : [currentCategory];
+
+      for (const cat of categories) {
+        let assets;
+        if (cat === 'watchlist') {
+          assets = getWatchlist();
+          if (assets.length === 0 && currentCategory === 'watchlist') {
+            html += '<div class="market-category-title">My Watchlist</div>';
+            html += '<div style="color:var(--text-secondary);font-size:0.85rem;padding:16px 0;">No stocks in watchlist yet. Add tickers below.</div>';
+            continue;
+          } else if (assets.length === 0) {
+            continue;
+          }
+        } else {
+          assets = MARKETS[cat] || [];
+        }
+
+        const catLabels = {indices: 'Global Indices', commodities: 'Commodities', crypto: 'Crypto', forex: 'Forex', watchlist: 'My Watchlist'};
+        html += `<div class="market-category-title">${catLabels[cat] || cat}</div>`;
+
+        for (const asset of assets) {
+          const data = allData[asset.ticker];
+          const price = data?.price != null ? data.price.toFixed(2) : '—';
+          const change = data?.change;
+          const changeStr = change != null ? (change >= 0 ? `+${change.toFixed(2)}%` : `${change.toFixed(2)}%`) : '—';
+          const changeClass = change > 0 ? 'up' : change < 0 ? 'down' : 'flat';
+          const currency = data?.currency || '';
+          const removeBtn = cat === 'watchlist'
+            ? `<button class="watchlist-remove" onclick="event.stopPropagation();removeFromWatchlist('${asset.ticker}')">Remove</button>`
+            : '';
+
+          html += `
+            <div class="market-card" onclick="window.location.href='search.html?ticker=${encodeURIComponent(asset.ticker)}'">
+              <div class="market-left">
+                <div class="market-ticker">${asset.ticker.replace('=F','').replace('=X','')}</div>
+                <div class="market-name">${asset.name}</div>
+              </div>
+              <div class="market-right">
+                <div class="market-price">${price}</div>
+                <div class="market-change ${changeClass}">${changeStr}</div>
+                ${removeBtn}
+              </div>
+            </div>`;
+        }
+      }
+
+      list.innerHTML = html;
+    }
+
+    async function fetchAndRender() {
+      const loading = document.getElementById('loading');
+      loading.style.display = 'block';
+      try {
+        allData = await fetchAllMarkets();
+        document.getElementById('lastUpdated').textContent = `Updated ${new Date().toLocaleTimeString()}`;
+      } catch (e) {
+        document.getElementById('lastUpdated').textContent = 'Failed to load — is stock_api.py running?';
+      }
+      loading.style.display = 'none';
+      renderMarkets();
+    }
+
+    // Auto-search if ticker in URL
+    const urlTicker = new URLSearchParams(window.location.search).get('ticker');
+
+    // Initial load
+    fetchAndRender();
+
+    // Service worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+  </script>
+
+</body>
+</html>

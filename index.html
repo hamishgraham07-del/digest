@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Briefing">
+  <meta name="theme-color" content="#FFFFFF">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="stylesheet" href="style.css">
+  <title>Morning Briefing — Saturday, 22 March 2026</title>
+</head>
+<body>
+
+  <div class="header">
+    <div>
+      <div class="header-title">Morning Briefing</div>
+      <div class="header-date">Saturday, 22 March 2026 &middot; 6:00 AM AEST</div>
+    </div>
+    <button class="theme-toggle" onclick="toggleTheme()">Dark</button>
+  </div>
+
+  <div class="nav-dots" id="navDots">
+    <div class="nav-dot" data-section="weather"></div>
+    <div class="nav-dot" data-section="calendar"></div>
+    <div class="nav-dot" data-section="big-picture"></div>
+    <div class="nav-dot" data-section="portfolio"></div>
+    <div class="nav-dot" data-section="strategy"></div>
+    <div class="nav-dot" data-section="world-news"></div>
+    <div class="nav-dot" data-section="au-news"></div>
+    <div class="nav-dot" data-section="ai-tech"></div>
+    <div class="nav-dot" data-section="sports"></div>
+    <div class="nav-dot" data-section="events"></div>
+    <div class="nav-dot" data-section="twk"></div>
+  </div>
+
+  <div id="weather">
+
+    <div class="weather-card">
+      <div class="weather-icon">☁️</div>
+      <div class="weather-details">
+        <div class="weather-temp">17.6&#8211;25.6&#176;C</div>
+        <div class="weather-desc">Overcast</div>
+        <div class="weather-meta">
+          <span>Rain 28%</span>
+          <span>UV 7 (High)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+    <div class="section" id="calendar">
+      <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+        <span class="section-title">Today's Calendar</span>
+        <span class="section-chevron">&#9662;</span>
+      </div>
+      <div class="section-body"><div class="text-secondary" style="padding:8px 0;">No events today</div></div>
+    </div>
+
+    <div class="section" id="big-picture">
+      <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+        <span class="section-title">The Big Picture</span>
+        <span class="section-chevron">&#9662;</span>
+      </div>
+      <div class="section-body"><div class="narrative"><p>Oil is the story today. Brent crude surged 7.4% overnight after reports of vessels struck near the Strait of Hormuz &mdash; the chokepoint for roughly 20% of the world's petroleum. That's dragged the ASX 200 down nearly 1% as the RBA rate hike narrative gathers steam, with CBA, Westpac and NAB all now forecasting a 25bp move at next week's meeting.</p><p>Your cash position looks increasingly smart. The pullback across WDS, STO and NDQ ETF is creating entry points, but there's no rush &mdash; let the dust settle on the Hormuz situation first.</p></div></div>
+    </div>
+
+    <div class="section" id="portfolio">
+      <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+        <span class="section-title">Portfolio Watchlist</span>
+        <span class="section-chevron">&#9662;</span>
+      </div>
+      <div class="section-body">
+    <div class="table-wrapper">
+      <table class="portfolio-table">
+        <thead><tr><th>Asset</th><th>Price</th><th>Change</th><th>Signal</th><th>Outlook</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>S&amp;P 500</td>
+            <td>6,752.50</td>
+            <td>-0.43%</td>
+            <td class="signal-bearish">PULLBACK</td>
+            <td>Tech profit-taking amid rising yields</td>
+          </tr>
+          <tr>
+            <td>NASDAQ</td>
+            <td>19,250.40</td>
+            <td>+0.30%</td>
+            <td class="signal-neutral">NEUTRAL</td>
+            <td>Consolidation after record run</td>
+          </tr>
+          <tr>
+            <td>Dow Jones</td>
+            <td>39,100.00</td>
+            <td>-0.65%</td>
+            <td class="signal-bearish">PULLBACK</td>
+            <td>Industrials dragged by oil spike</td>
+          </tr>
+          <tr>
+            <td>FTSE 100</td>
+            <td>10,284.75</td>
+            <td>-1.24%</td>
+            <td class="signal-bearish">PULLBACK</td>
+            <td>Energy majors volatile</td>
+          </tr>
+          <tr>
+            <td>Nikkei 225</td>
+            <td>55,025.37</td>
+            <td>+1.40%</td>
+            <td class="signal-bullish">BULLISH</td>
+            <td>Yen weakness boosting exporters</td>
+          </tr>
+          <tr>
+            <td>ASX 200</td>
+            <td>8,851.00</td>
+            <td>-0.99%</td>
+            <td class="signal-bearish">PULLBACK</td>
+            <td>RBA hike fears hitting materials</td>
+          </tr>
+          <tr>
+            <td>Gold USD/oz</td>
+            <td>3,045.00</td>
+            <td>+0.35%</td>
+            <td class="signal-neutral">NEUTRAL</td>
+            <td>Safe-haven demand steady</td>
+          </tr>
+          <tr>
+            <td>Gold AUD/oz</td>
+            <td>4,267.00</td>
+            <td>-0.47%</td>
+            <td class="signal-neutral">NEUTRAL</td>
+            <td>AUD weakness offsetting</td>
+          </tr>
+          <tr>
+            <td>Brent Crude</td>
+            <td>$98.79</td>
+            <td>+7.41%</td>
+            <td class="signal-bullish">SURGING</td>
+            <td>Hormuz supply disruption fears</td>
+          </tr>
+          <tr>
+            <td>Iron Ore</td>
+            <td>$103.53</td>
+            <td>+0.30%</td>
+            <td class="signal-neutral">NEUTRAL</td>
+            <td>Steady China demand</td>
+          </tr>
+          <tr>
+            <td>Copper</td>
+            <td>$12,888</td>
+            <td>+0.01%</td>
+            <td class="signal-neutral">NEUTRAL</td>
+            <td>Industrial demand balanced</td>
+          </tr>
+          <tr>
+            <td>AUD/USD</td>
+            <td>0.7138</td>
+            <td>-0.19%</td>
+            <td class="signal-neutral">NEUTRAL</td>
+            <td>USD safe-haven flows</td>
+          </tr>
+          <tr>
+            <td>Bitcoin AUD</td>
+            <td>$98,790</td>
+            <td>+0.53%</td>
+            <td class="signal-neutral">NEUTRAL</td>
+            <td>Holding key support</td>
+          </tr>
+          <tr>
+            <td>WDS</td>
+            <td>$30.18</td>
+            <td>-3.76%</td>
+            <td class="signal-bearish">PULLBACK</td>
+            <td>Post-dividend sell-off</td>
+          </tr>
+          <tr>
+            <td>STO</td>
+            <td>$7.37</td>
+            <td>-3.50%</td>
+            <td class="signal-bearish">PULLBACK</td>
+            <td>Energy sector weakness</td>
+          </tr>
+          <tr>
+            <td>NDQ ETF</td>
+            <td>$51.41</td>
+            <td>-2.17%</td>
+            <td class="signal-bearish">PULLBACK</td>
+            <td>Tracking US tech volatility</td>
+          </tr></tbody>
+      </table>
+    </div></div>
+    </div>
+
+    <div class="section" id="strategy">
+      <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+        <span class="section-title">Strategy &amp; Cash Position</span>
+        <span class="section-chevron">&#9662;</span>
+      </div>
+      <div class="section-body"><div class="narrative"><p>With $76k in cash, the current pullback offers potential entry points for NDQ (now $51.41). Maintain gold exposure as a geopolitical hedge while monitoring the RBA decision on March 24. High yields favour cash positioning for now &mdash; you're earning 5% doing nothing.</p></div></div>
+    </div>
+
+    <div class="section" id="world-news">
+      <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+        <span class="section-title">World News</span>
+        <span class="section-chevron">&#9662;</span>
+      </div>
+      <div class="section-body">
+        <div class="story">
+          <div class="story-headline" onclick="this.parentElement.classList.toggle('expanded')">Strait of Hormuz tensions escalate <span class="story-expand-hint">&#8250;</span></div>
+          <div class="story-body">Multiple vessels reported struck near the Persian Gulf chokepoint overnight, sending oil prices surging. The US Navy has dispatched additional carrier groups to the region.</div>
+          <div class="story-why">Direct impact on Brent Crude (+7.4%), flows through to WDS/STO and broader energy sector.</div>
+          
+        </div>
+        <div class="story">
+          <div class="story-headline" onclick="this.parentElement.classList.toggle('expanded')">China posts double-digit trade growth <span class="story-expand-hint">&#8250;</span></div>
+          <div class="story-body">China's February trade data exceeded expectations with exports up 12.4% year-on-year, signalling resilient global demand despite geopolitical headwinds.</div>
+          <div class="story-why">Positive for iron ore and copper demand — supports the ASX materials sector.</div>
+          
+        </div>
+        <div class="story">
+          <div class="story-headline" onclick="this.parentElement.classList.toggle('expanded')">Fed signals patience on rate cuts <span class="story-expand-hint">&#8250;</span></div>
+          <div class="story-body">Federal Reserve minutes show officials want to see more evidence of cooling inflation before cutting rates, pushing the expected first cut to September.</div>
+          <div class="story-why">Keeps USD strong, pressures AUD/USD. Also means your cash earns decent yield for longer.</div>
+          
+        </div></div>
+    </div>
+
+    <div class="section" id="au-news">
+      <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+        <span class="section-title">Australia News</span>
+        <span class="section-chevron">&#9662;</span>
+      </div>
+      <div class="section-body">
+        <div class="story">
+          <div class="story-headline" onclick="this.parentElement.classList.toggle('expanded')">RBA rate hike now consensus among Big 4 banks <span class="story-expand-hint">&#8250;</span></div>
+          <div class="story-body">CBA, NAB, and Westpac have all moved to forecast a 25bp rate hike at next week's meeting, with ANZ expected to follow.</div>
+          <div class="story-why">If it happens, mortgage rates rise again. Your all-cash position avoids this pain entirely.</div>
+          
+        </div>
+        <div class="story">
+          <div class="story-headline" onclick="this.parentElement.classList.toggle('expanded')">Sydney auction clearance rate dips to 62% <span class="story-expand-hint">&#8250;</span></div>
+          <div class="story-body">Weekend clearance rates fell below the 65% threshold that typically signals a cooling market, with outer suburbs hit hardest.</div>
+          <div class="story-why">Housing market cooling could delay RBA hike — worth watching.</div>
+          
+        </div></div>
+    </div>
+
+    <div class="section" id="ai-tech">
+      <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+        <span class="section-title">AI &amp; Technology</span>
+        <span class="section-chevron">&#9662;</span>
+      </div>
+      <div class="section-body">
+        <div class="story">
+          <div class="story-headline" onclick="this.parentElement.classList.toggle('expanded')">Synopsys launches agentic engineering tools <span class="story-expand-hint">&#8250;</span></div>
+          <div class="story-body">First-of-its-kind AI capabilities automate complex system-level chip design, potentially cutting design cycles from months to weeks.</div>
+          <div class="story-why">NDQ ETF exposure captures this trend. Also a Purpletag consulting angle — companies will need help integrating these tools.</div>
+          
+        </div>
+        <div class="story">
+          <div class="story-headline" onclick="this.parentElement.classList.toggle('expanded')">Tencent unveils text-to-3D engine at GDC <span class="story-expand-hint">&#8250;</span></div>
+          <div class="story-body">New AI-powered tools allow game developers to generate production-ready 3D assets from text descriptions in under 5 minutes.</div>
+          <div class="story-why">Massive productivity boost for game studios. Worth monitoring for content creation automation opportunities.</div>
+          
+        </div></div>
+    </div>
+
+    <div class="section" id="sports">
+      <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+        <span class="section-title">Sports</span>
+        <span class="section-chevron">&#9662;</span>
+      </div>
+      <div class="section-body"><div class="sport-league">AFL — Round 1</div>
+                <div class="match">
+                  <span class="match-teams">Sydney Swans vs Carlton</span>
+                  <span class="match-time">Tonight 7:30pm AEST</span>
+                </div>
+                <div class="match">
+                  <span class="match-teams">GWS Giants vs Hawthorn</span>
+                  <span class="match-time">Tomorrow 1:45pm AEST</span>
+                </div>
+                <div class="match">
+                  <span class="match-teams">Collingwood vs Geelong</span>
+                  <span class="match-score">92-85</span>
+                </div><div class="sport-league">NRL — Round 3</div>
+                <div class="match">
+                  <span class="match-teams">Storm vs Eels</span>
+                  <span class="match-score">28-14</span>
+                </div>
+                <div class="match">
+                  <span class="match-teams">Broncos vs Panthers</span>
+                  <span class="match-time">Tonight 8:00pm AEST</span>
+                </div>
+                <div class="match">
+                  <span class="match-teams">Roosters vs Rabbitohs</span>
+                  <span class="match-time">Tomorrow 4:05pm AEST</span>
+                </div><div class="sport-league">Premier League — MW28</div>
+                <div class="match">
+                  <span class="match-teams">Arsenal vs Chelsea</span>
+                  <span class="match-score">2-1</span>
+                </div>
+                <div class="match">
+                  <span class="match-teams">Man City vs Liverpool</span>
+                  <span class="match-time">Tomorrow 3:00am AEST</span>
+                </div></div>
+    </div>
+
+    <div class="section" id="events">
+      <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+        <span class="section-title">Sydney &amp; Surrounds</span>
+        <span class="section-chevron">&#9662;</span>
+      </div>
+      <div class="section-body">
+        <div class="event">
+          <div class="event-name">Sydney Royal Easter Show</div>
+          <div class="event-details">Mar 20 – Apr 2 • Sydney Olympic Park • From $35</div>
+          <div class="event-pub">Nearby: Olympic Park Hotel — $8 schooners during show</div>
+        </div>
+        <div class="event">
+          <div class="event-name">Vivid Preview Night</div>
+          <div class="event-details">Tonight 6:30pm • Circular Quay • Free</div>
+          <div class="event-pub">Nearby: Opera Bar — harbour views with the light show</div>
+        </div>
+        <div class="event">
+          <div class="event-name">NRL Fan Day</div>
+          <div class="event-details">Tomorrow 10am-2pm • Moore Park • Free</div>
+          <div class="event-pub">Nearby: The Bat &amp; Ball — classic pub across the road</div>
+        </div>
+        <div class="event">
+          <div class="event-name">Newtown Festival Street Market</div>
+          <div class="event-details">Sunday 10am-4pm • King Street, Newtown • Free</div>
+          <div class="event-pub">Nearby: The Courthouse Hotel — great beer garden</div>
+        </div></div>
+    </div>
+
+    <div class="section" id="twk">
+      <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+        <span class="section-title">Things Worth Knowing</span>
+        <span class="section-chevron">&#9662;</span>
+      </div>
+      <div class="section-body"><div class="narrative"><p>The Strait of Hormuz handles ~20% of the world's petroleum consumption daily. Current tensions are the highest since the 2019 tanker attacks. If sustained, expect petrol prices at the bowser to jump within 2-3 weeks.</p><p>The AFL season opener is tonight — perfect excuse to hit the pub with mates. Swans are $1.55 favourites against Carlton.</p></div></div>
+    </div>
+
+  <div class="footer" style="padding-bottom:80px;">
+    Sources: Google Finance, Trading Economics, Reuters, ABC News, AFL.com.au, NRL.com, PremierLeague.com, TimeOut Sydney, Open-Meteo<br>
+    Generated 6:00 AM AEST
+  </div>
+
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <a href="index.html" class="nav-btn active">
+      <span class="nav-btn-icon">&#9783;</span>
+      <span>Digest</span>
+    </a>
+    <a href="markets.html" class="nav-btn">
+      <span class="nav-btn-icon">&#128200;</span>
+      <span>Markets</span>
+    </a>
+    <a href="search.html" class="nav-btn">
+      <span class="nav-btn-icon">&#128270;</span>
+      <span>Stocks</span>
+    </a>
+  </div>
+
+  <script>
+    // Theme toggle
+    function toggleTheme() {
+      const body = document.body;
+      const btn = document.querySelector('.theme-toggle');
+      const meta = document.querySelector('meta[name="theme-color"]');
+      if (body.getAttribute('data-theme') === 'dark') {
+        body.removeAttribute('data-theme');
+        btn.textContent = 'Dark';
+        meta.content = '#FFFFFF';
+      } else {
+        body.setAttribute('data-theme', 'dark');
+        btn.textContent = 'Light';
+        meta.content = '#1A1A1A';
+      }
+      localStorage.setItem('theme', body.getAttribute('data-theme') || 'light');
+    }
+
+    // Restore theme preference
+    if (localStorage.getItem('theme') === 'dark') {
+      document.body.setAttribute('data-theme', 'dark');
+      document.querySelector('.theme-toggle').textContent = 'Light';
+      document.querySelector('meta[name="theme-color"]').content = '#1A1A1A';
+    }
+
+    // Nav dots — highlight active section on scroll
+    const sections = document.querySelectorAll('.section, #weather');
+    const dots = document.querySelectorAll('.nav-dot');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          dots.forEach(d => d.classList.toggle('active', d.dataset.section === id));
+        }
+      });
+    }, { threshold: 0.3 });
+    sections.forEach(s => observer.observe(s));
+
+    // Service worker registration
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+  </script>
+
+</body>
+</html>

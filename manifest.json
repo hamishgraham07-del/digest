@@ -1,0 +1,22 @@
+{
+  "name": "Morning Briefing",
+  "short_name": "Briefing",
+  "description": "Daily morning digest — markets, news, sports, events",
+  "start_url": "/digest/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#C47F00",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
