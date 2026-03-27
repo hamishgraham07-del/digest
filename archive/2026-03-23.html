@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a0a0a">
+<title>Morning Briefing — Monday, March 23, 2026</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{--bg:#0a0a0a;--card:#141414;--card-border:#1e1e1e;--text:#e8e8e8;--text-muted:#888;--accent:#f59e0b;--green:#22c55e;--red:#ef4444;--blue:#3b82f6;--font:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',system-ui,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;padding-bottom:80px}
+.ctr{max-width:640px;margin:0 auto;padding:0 16px}
+header{padding:20px 16px 12px;text-align:center;border-bottom:1px solid var(--card-border);margin-bottom:16px}
+header h1{font-size:22px;font-weight:700;letter-spacing:-.5px}
+header .date{color:var(--text-muted);font-size:13px;margin-top:4px}
+.wb{display:flex;align-items:center;justify-content:center;gap:12px;padding:10px 16px;background:var(--card);border-radius:12px;margin:0 16px 16px;font-size:14px}
+.wb .ic{font-size:28px}.wb .tp{font-weight:600;font-size:18px}.wb .dt{color:var(--text-muted);font-size:12px}
+section{margin-bottom:20px}
+.sh{display:flex;align-items:center;gap:8px;padding:8px 16px;margin-bottom:8px}
+.sh h2{font-size:16px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--accent)}
+.cd{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:16px;margin:0 0 10px}
+.cd h3{font-size:15px;font-weight:700;margin-bottom:8px;line-height:1.3}
+.cd p{font-size:14px;line-height:1.65;margin-bottom:8px}
+.wy{font-size:13px;color:var(--accent);font-style:italic;padding-top:4px;border-top:1px solid var(--card-border)}
+.mt{width:100%;border-collapse:collapse;font-size:12px}
+.mt th{text-align:left;padding:8px 6px;color:var(--text-muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--card-border)}
+.mt td{padding:7px 6px;border-bottom:1px solid #111;vertical-align:middle}
+.mt .an{font-weight:600;font-size:12px}
+.mt .pr{font-variant-numeric:tabular-nums}
+.mt .ch{font-weight:600;font-variant-numeric:tabular-nums}
+.mt .up{color:var(--green)}.mt .dn{color:var(--red)}
+.sg{font-size:10px;padding:2px 6px;border-radius:4px;font-weight:700;text-transform:uppercase;white-space:nowrap}
+.sb{background:#22c55e22;color:var(--green)}.sp{background:#ef444422;color:var(--red)}.sn{background:#3b82f622;color:var(--blue)}
+.st{width:100%;border-collapse:collapse;font-size:11px;margin-top:12px}
+.st th{text-align:left;padding:6px 4px;color:var(--text-muted);font-weight:600;font-size:10px;text-transform:uppercase;border-bottom:1px solid var(--card-border)}
+.st td{padding:5px 4px;border-bottom:1px solid #111;font-variant-numeric:tabular-nums}
+.st tr:nth-child(-n+8) td:first-child{color:var(--green);font-weight:700}
+.st .tn{font-weight:500;font-size:12px}
+.ml{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #111;font-size:13px}
+.ml:last-child{border-bottom:none}
+.ml .tm{flex:1}.ml .sc{font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums;min-width:50px;text-align:right}
+.ml .ti{color:var(--text-muted);font-size:11px;min-width:70px;text-align:right}
+.ec{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:14px;margin-bottom:10px}
+.ec h3{font-size:14px;font-weight:700;color:var(--accent);margin-bottom:6px}
+.ec .ed{font-size:13px;margin-bottom:6px}
+.ec .ep{font-size:12px;color:var(--text-muted);padding-top:6px;border-top:1px solid var(--card-border)}
+.pc{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);border:1px solid #2a2a4e;border-radius:12px;padding:16px}
+.pc h3{color:var(--accent);font-size:16px;margin-bottom:10px}
+.pc .fd{margin-bottom:8px}.pc .lb{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);font-weight:600}.pc .vl{font-size:14px}
+.sc2{background:linear-gradient(135deg,#0d1b0d 0%,#1a2e1a 100%);border:1px solid #1e3e1e;border-radius:12px;padding:16px}
+.sc2 p{font-size:14px;line-height:1.65;margin-bottom:10px}.sc2 strong{color:var(--green)}
+.src{text-align:center;padding:20px 16px;color:var(--text-muted);font-size:11px}
+.nd{position:fixed;right:8px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:8px;z-index:100}
+.ndot{width:8px;height:8px;border-radius:50%;background:var(--card-border);cursor:pointer;transition:all .2s}
+.ndot:hover,.ndot.active{background:var(--accent);transform:scale(1.3)}
+@media(max-width:400px){.mt{font-size:11px}.mt th,.mt td{padding:6px 3px}}
+</style>
+</head>
+<body>
+<nav class="nd" id="navDots">
+<div class="ndot" data-section="big-picture" title="Big Picture"></div>
+<div class="ndot" data-section="markets" title="Markets"></div>
+<div class="ndot" data-section="strategy" title="Strategy"></div>
+<div class="ndot" data-section="world-news" title="World"></div>
+<div class="ndot" data-section="au-news" title="Australia"></div>
+<div class="ndot" data-section="ai-tech" title="AI & Tech"></div>
+<div class="ndot" data-section="pitch" title="Pitch"></div>
+<div class="ndot" data-section="sports" title="Sports"></div>
+<div class="ndot" data-section="events" title="Events"></div>
+<div class="ndot" data-section="worth-knowing" title="Worth Knowing"></div>
+</nav>
+<header><h1>Morning Briefing</h1><div class="date">Monday, March 23, 2026 · 2:10 PM AEDT</div></header>
+<div class="wb"><span class="ic">⛅</span><span class="tp">23°C</span><span class="dt">Partly sunny, 23°C → 21°C overnight. Low rain chance (9%). Humidity 74%.</span></div>
+<div class="ctr">
+<section id="big-picture"><div class="sh"><h2>📊 The Big Picture</h2></div><div class="cd"><p>It's a sea of red across global markets this Monday, and the common thread is geopolitics — specifically, the Iran-Strait of Hormuz crisis entering its 23rd day. Trump's 48-hour ultimatum to Tehran to reopen the Strait sent shockwaves through every asset class except, interestingly, oil (which was already priced for conflict) and energy stocks on the ASX. The Nikkei got absolutely hammered (–3.35%), the NASDAQ shed 2%, and even gold — normally the safe haven play — dropped 3% as investors appear to be liquidating everything for cash.</p><p>Here's why this matters for your watchlist: Woodside and Santos are actually UP today because elevated oil prices are a direct revenue tailwind for energy producers. The AUD is sliding below 70 cents US, which makes your NDQ ETF position more expensive to enter but also means Aussie exporters are more competitive. Meanwhile, the RBA just hiked to 4.10% and the big banks are tipping another hike in May — so the cost of holding cash is actually working in your favour right now while markets sell off.</p><p>The smart play today is patience. When the VIX spikes 11% in a single session, that's fear, not fundamentals. The underlying US economy and corporate earnings haven't changed — it's geopolitical risk premium being repriced. Watch for the Strait of Hormuz deadline (Wednesday) as the next catalyst. If diplomacy prevails, this sell-off becomes a buying opportunity. If it escalates, energy stocks run further.</p></div></section>
+<section id="markets"><div class="sh"><h2>📈 Markets & Watchlist</h2></div><div class="cd" style="padding:8px"><table class="mt"><thead><tr><th>Asset</th><th>Price</th><th>Chg</th><th>Signal</th></tr></thead><tbody>
+<tr><td class="an">S&P 500</td><td class="pr">6,506.48</td><td class="ch dn">-1.51%</td><td><span class="sg sp">PULLBACK</span></td></tr>
+<tr><td class="an">NASDAQ</td><td class="pr">21,647.61</td><td class="ch dn">-2.01%</td><td><span class="sg sp">PULLBACK</span></td></tr>
+<tr><td class="an">Dow Jones</td><td class="pr">45,577.47</td><td class="ch dn">-0.96%</td><td><span class="sg sp">PULLBACK</span></td></tr>
+<tr><td class="an">FTSE 100</td><td class="pr">9,918.33</td><td class="ch dn">-1.44%</td><td><span class="sg sp">PULLBACK</span></td></tr>
+<tr><td class="an">Nikkei 225</td><td class="pr">51,582.23</td><td class="ch dn">-3.35%</td><td><span class="sg sp">PULLBACK</span></td></tr>
+<tr><td class="an">ASX 200</td><td class="pr">8,358.60</td><td class="ch dn">-0.83%</td><td><span class="sg sp">PULLBACK</span></td></tr>
+<tr><td class="an">Gold (USD/oz)</td><td class="pr">US$4,354</td><td class="ch dn">-2.99%</td><td><span class="sg sp">PULLBACK</span></td></tr>
+<tr><td class="an">Gold (AUD/oz)</td><td class="pr">A$6,239</td><td class="ch dn">-2.60%</td><td><span class="sg sp">PULLBACK</span></td></tr>
+<tr><td class="an">Brent Crude</td><td class="pr">US$112.95</td><td class="ch up">+0.68%</td><td><span class="sg sb">BULLISH</span></td></tr>
+<tr><td class="an">Iron Ore</td><td class="pr">US$114/t</td><td class="ch up">+0.74%</td><td><span class="sg sb">BULLISH</span></td></tr>
+<tr><td class="an">Copper</td><td class="pr">US$5.28/lb</td><td class="ch dn">-1.23%</td><td><span class="sg sp">PULLBACK</span></td></tr>
+<tr><td class="an">AUD/USD</td><td class="pr">0.6979</td><td class="ch dn">-0.41%</td><td><span class="sg sp">PULLBACK</span></td></tr>
+<tr><td class="an">Bitcoin (AUD)</td><td class="pr">A$98,010</td><td class="ch up">+1.23%</td><td><span class="sg sn">NEUTRAL</span></td></tr>
+<tr><td class="an">WDS (Woodside)</td><td class="pr">$34.30</td><td class="ch up">+0.75%</td><td><span class="sg sb">BULLISH</span></td></tr>
+<tr><td class="an">STO (Santos)</td><td class="pr">$8.02</td><td class="ch up">+0.44%</td><td><span class="sg sb">BULLISH</span></td></tr>
+<tr><td class="an">NDQ ETF</td><td class="pr">$50.24</td><td class="ch dn">-0.77%</td><td><span class="sg sp">PULLBACK</span></td></tr>
+</tbody></table></div></section>
+<section id="strategy"><div class="sh"><h2>🎯 Strategy & Watchlist Notes</h2></div><div class="sc2"><p><strong>Current stance: Cash is king, energy is the hedge.</strong></p><p>With your current cash position, this volatility is actually your friend. Here's what I'd be doing:</p><p><strong>1. Don't chase the dip yet.</strong> The VIX at 26.78 (+11.31%) signals we're in elevated fear territory but not capitulation. Wait for the Hormuz deadline resolution on Wednesday before making any moves on broad market ETFs like NDQ.</p><p><strong>2. Energy watchlist (WDS, STO) is performing.</strong> Both are green today despite a bloodbath everywhere else. Brent at $112.95 directly benefits these names. If you've been watching WDS, the $33.96-$34.60 range today shows strong support. A break above $35 on sustained oil prices would be technically significant.</p><p><strong>3. Gold pullback is interesting.</strong> Gold dropping 3% in a risk-off day is unusual — it suggests forced selling, not fundamental weakness. At A$6,239/oz, if gold stabilises while AUD keeps falling, AUD-denominated gold could recover faster than USD gold.</p><p><strong>4. NDQ ETF at $50.24 is getting cheaper.</strong> The NASDAQ's 2% drop flows through to the ETF. Current P/E ratios for the NASDAQ 100 are still elevated, but if you're looking at a 3-5 year horizon, sub-$50 would be a strong entry point. We're not there yet.</p><p><strong>Bottom line:</strong> Currently, this is what I would do — sit tight through Wednesday, watch the Hormuz situation, and prepare a shopping list for if/when the dust settles. Energy names are the only thing I'd be comfortable adding to right now given the oil price tailwind.</p></div></section>
+<section id="world-news"><div class="sh"><h2>🌍 World News</h2></div>
+<div class="cd"><h3>Iran War Day 23: Trump's 48-Hour Hormuz Ultimatum Rattles Global Markets</h3><p>The US-Israeli military campaign against Iran has entered its 23rd day with no signs of de-escalation. President Trump issued an ultimatum on Sunday demanding Iran fully reopen the Strait of Hormuz within 48 hours or face strikes on Iranian power plants. The Strait — through which roughly 20% of global oil and a third of the world's fertiliser shipments pass — has been effectively closed since early March. Israeli airstrikes hit eastern Tehran overnight, while Iranian retaliatory missile strikes injured nearly 100 people near an Israeli nuclear facility. This is the single biggest driver of market volatility right now, and the Wednesday deadline is the next major catalyst.</p><div class="wy">💡 This directly explains why every market is red today except oil and energy stocks. For your watchlist, WDS and STO benefit from elevated oil prices, while NDQ and broad indices face headwinds until the geopolitical risk premium unwinds.</div></div>
+<div class="cd"><h3>Cuba's Power Grid Collapses for Third Time in March</h3><p>Cuba plunged into a nationwide blackout on Sunday — the third complete power grid failure this month. The country's ageing electricity infrastructure, which was already struggling under chronic underinvestment, has been pushed to breaking point by a US-imposed oil blockade that has choked off fuel supplies to thermal power stations. Millions of Cubans are without electricity, running water, and air conditioning in tropical heat. International aid has been slow, and the government has been unable to stabilise the grid for more than a few days at a stretch.</p><div class="wy">💡 This is a downstream consequence of the broader US-Iran confrontation disrupting global oil supply chains. It's a reminder that energy security is the defining geopolitical issue of 2026, which is why energy stocks are outperforming.</div></div>
+<div class="cd"><h3>Sudan Hospital Strike Kills 64 Including 13 Children in Darfur</h3><p>At least 64 people, including 13 children, were killed in a strike on a hospital in Sudan's western Darfur region, according to the World Health Organization. The attack is the latest atrocity in Sudan's ongoing civil war, which has created one of the world's worst humanitarian crises with millions displaced. The WHO condemned the strike as a violation of international humanitarian law, but international attention remains largely focused on the Middle East conflict, leaving Sudan's crisis chronically under-resourced and under-reported.</p><div class="wy">💡 While not directly market-moving, Sudan's crisis compounds global food insecurity alongside the Hormuz shipping disruption. Fertiliser supply chains through the Strait of Hormuz affect food production globally, and Sudan was already facing famine before this escalation.</div></div>
+<div class="cd"><h3>Brazil's Lula Slams US for 'Thinking They Own the World'</h3><p>Brazilian President Lula da Silva publicly criticised the United States for its military campaign against Iran, saying Washington acts as if it owns the world. The remarks reflect growing frustration among BRICS nations and the Global South with US foreign policy, and come as Brazil prepares to host the G20 later this year. Lula's comments were echoed by several Latin American leaders and add to the diplomatic isolation the US faces over its Middle East strategy outside of its traditional Western allies.</p><div class="wy">💡 This signals growing geopolitical fragmentation that could accelerate de-dollarisation trends. For markets, it means the US may face more resistance to unilateral action, which could prolong the Hormuz crisis rather than resolve it quickly.</div></div>
+</section>
+<section id="au-news"><div class="sh"><h2>🇦🇺 Australia</h2></div>
+<div class="cd"><h3>RBA Hikes Again to 4.10% — Banks Tipping 4.35% by May</h3><p>The Reserve Bank of Australia has raised the cash rate by 25 basis points to 4.10%, marking the second consecutive rate hike in 2026 after last year's brief easing cycle. The Board voted 5-4, signalling this was a close call but that persistent inflation — particularly in housing (+6.8%) and food (+3.1%) — left them no choice. ANZ and NAB have both revised their forecasts to include another 25bp hike in May to 4.35%, which would take rates back to their 2024 peak. CPI is running at 3.8% annually, still well above the RBA's 2-3% target band, and the Board flagged 'rising capacity pressures' as a key concern.</p><div class="wy">💡 Higher rates mean your cash position earns more in savings/term deposits while you wait for better market entry points. For housing, this puts further pressure on mortgage holders and could cool property prices — relevant if you're watching the market. For the ASX, rate-sensitive sectors like REITs and banks will feel the pinch.</div></div>
+<div class="cd"><h3>GDP Growth Accelerates to 2.6% — Strongest in Over a Year</h3><p>Australia's economy grew 0.8% in the December quarter, pushing annual growth to 2.6% — the strongest pace in more than a year. The result exceeded expectations and was driven by government spending, a rebound in household consumption, and strong exports (partly thanks to elevated commodity prices). However, per-capita GDP remains weak, meaning the average Australian isn't feeling the growth. The strong headline number actually gave the RBA more room to hike rates, as it suggests the economy can handle tighter monetary policy without tipping into recession.</p><div class="wy">💡 Strong GDP + rising rates = the RBA has cover to keep tightening. This is a double-edged sword: the economy isn't crashing (good for ASX earnings), but rates will stay higher for longer (bad for valuations and housing affordability).</div></div>
+<div class="cd"><h3>Sydney and Melbourne Listings Surge as Sellers Test the Market</h3><p>New property listings in Sydney and Melbourne have picked up sharply through February and into March, with sellers looking to capitalise before further rate hikes potentially cool buyer demand. However, the picture is uneven: Perth listings remain 48% below the five-year average, Brisbane 31% below, and Adelaide 23% below — creating a two-speed market where the eastern capitals are loosening while the resource states stay tight. Property analytics firm Cotality noted that the March rate hike is likely to cool demand further but could intensify competition at the lower end of the market as first-home buyers race to lock in before rates potentially hit 4.35%.</p><div class="wy">💡 If you're watching the housing market, more listings in Sydney means more choice and potentially softer prices — especially if rates go to 4.35% in May. The resource state tightness (Perth, Brisbane) reflects the energy/mining boom that's also lifting WDS and STO.</div></div>
+</section>
+<section id="ai-tech"><div class="sh"><h2>🤖 AI & Technology</h2></div>
+<div class="cd"><h3>Trump Signs AI Accountability Act — Mandatory Bias Audits for Business</h3><p>The US has passed the AI Accountability Act, the first major federal AI legislation, requiring companies deploying AI in consequential decisions (hiring, lending, insurance, healthcare) to conduct and publish regular bias audits. The law establishes a new AI oversight body within the FTC and imposes fines up to $10M per violation for non-compliance. This is a significant shift from the previous 'voluntary commitments' approach and brings the US closer to EU-style AI regulation. For AI automation firms, this creates both risk (compliance costs) and opportunity (demand for audit tools and governance platforms).</p><div class="wy">💡 Directly relevant to Purpletag. This creates a new service category: helping SMBs ensure their AI automations comply with bias audit requirements. If you're building AI workflows for clients, 'compliance-ready' becomes a selling point. Consider adding AI governance consulting to your service offerings.</div></div>
+<div class="cd"><h3>Apple's Gemini-Powered Siri Overhaul Targets March Release with iOS 26.4</h3><p>Apple is reportedly finalising a complete reimagining of Siri powered by Google's Gemini AI model, set to launch with iOS 26.4 this month. The new Siri will feature on-screen awareness (understanding what you're looking at on your phone), cross-app integration (performing multi-step tasks across different apps), and will run partly on-device via Apple's Private Cloud Compute infrastructure for privacy. This represents Apple's biggest AI play since launching Apple Intelligence last year, and signals that the AI assistant wars are heating up significantly.</p><div class="wy">💡 Apple going all-in on AI assistants validates the market for AI automation services. When Apple normalises AI-powered workflows for 2 billion iPhone users, the SMBs you work with will increasingly expect — and demand — similar AI automation in their business operations. Rising tide lifts all boats.</div></div>
+<div class="cd"><h3>OpenAI's GPT-5.4 Hits 1M Token Context — Revenue Surpasses $25B Annualised</h3><p>OpenAI unveiled GPT-5.4 with a 1-million-token context window and the ability to autonomously execute multi-step workflows, scoring 75% on the OSWorld-V benchmark (which simulates real desktop productivity tasks). The company has also surpassed $25 billion in annualised revenue and is reportedly taking early steps toward a public listing. Meanwhile, McKinsey's latest report found that 12% of current job tasks across the economy have been automated by AI over the past two years, but 8% of entirely new job categories were created in the same period — suggesting AI is reshaping rather than simply replacing the workforce.</p><div class="wy">💡 The 1M token context window is game-changing for the kind of document processing and workflow automation Purpletag builds. You can now feed entire business databases, years of emails, or complete project histories into a single prompt. This massively expands what's possible for SMB automation.</div></div>
+</section>
+<section id="pitch"><div class="sh"><h2>💡 Daily Business Pitch</h2></div>
+<div class="pc"><h3>The AI Accountability Act just created a brand new market overnight.</h3>
+<div class="fd"><div class="lb">Sector</div><div class="vl">AI Compliance & Bias Audit Tooling for SMBs</div></div>
+<div class="fd"><div class="lb">Why Now</div><div class="vl">Every business using AI in hiring, lending, or customer decisions now needs regular bias audits. Most SMBs have no idea how to comply.</div></div>
+<div class="fd"><div class="lb">What You'd Build</div><div class="vl">A lightweight AI audit-as-a-service platform: automated bias scanning of client AI workflows, plain-English compliance reports, and remediation recommendations. White-labelled so consultancies like yours can resell it.</div></div>
+<div class="fd"><div class="lb">Revenue Model</div><div class="vl">Monthly SaaS subscription ($200-500/mo per SMB) + setup fee ($2-5K). Alternatively, offer it as a value-add to existing Purpletag automation packages.</div></div>
+<div class="fd"><div class="lb">Risk</div><div class="vl">Medium — regulation is locked in, but enforcement timeline and exact audit standards are still being defined by the FTC.</div></div>
+<div class="fd"><div class="lb">Capital Needed</div><div class="vl">Low — you could build an MVP with existing AI APIs and a simple web dashboard. Under $5K to prototype.</div></div>
+<div class="fd"><div class="lb">Time to Revenue</div><div class="vl">2-3 months to MVP, 4-6 months to first paying clients.</div></div>
+</div></section>
+<section id="sports"><div class="sh"><h2>⚽ Sports</h2></div>
+<div class="cd"><h3>NRL — Round 3</h3>
+<div class="ml"><span class="tm">Raiders vs Bulldogs</span><span class="sc">10-14</span><span class="ti">Thu 19 Mar</span></div>
+<div class="ml"><span class="tm">Roosters vs Panthers</span><span class="sc">4-40</span><span class="ti">Fri 20 Mar</span></div>
+<div class="ml"><span class="tm">Storm vs Broncos</span><span class="sc">14-18</span><span class="ti">Fri 20 Mar</span></div>
+<div class="ml"><span class="tm">Knights vs Warriors</span><span class="sc">12-38</span><span class="ti">Sat 21 Mar</span></div>
+<div class="ml"><span class="tm">Sharks vs Dolphins</span><span class="sc">10-38</span><span class="ti">Sat 21 Mar</span></div>
+<div class="ml"><span class="tm">Rabbitohs vs Wests Tigers</span><span class="sc">20-16</span><span class="ti">Sat 21 Mar</span></div>
+<div class="ml"><span class="tm">Eels vs Dragons</span><span class="sc">30-20</span><span class="ti">Sun 22 Mar</span></div>
+<div class="ml"><span class="tm">Cowboys vs Titans</span><span class="sc">30-16</span><span class="ti">Sun 22 Mar</span></div>
+<div class="ml"><span class="tm">Sea Eagles</span><span class="sc">BYE</span><span class="ti">—</span></div>
+<table class="st"><thead><tr><th>#</th><th>Team</th><th>W</th><th>L</th><th>D</th><th>Pts</th><th>+/-</th></tr></thead><tbody>
+<tr><td>1</td><td class="tn">Warriors</td><td>3</td><td>0</td><td>0</td><td><strong>6</strong></td><td>+84</td></tr>
+<tr><td>2</td><td class="tn">Panthers</td><td>3</td><td>0</td><td>0</td><td><strong>6</strong></td><td>+82</td></tr>
+<tr><td>3</td><td class="tn">Dolphins</td><td>2</td><td>1</td><td>0</td><td><strong>4</strong></td><td>+64</td></tr>
+<tr><td>4</td><td class="tn">Bulldogs</td><td>2</td><td>0</td><td>0</td><td><strong>4</strong></td><td>+24</td></tr>
+<tr><td>5</td><td class="tn">Storm</td><td>2</td><td>1</td><td>0</td><td><strong>4</strong></td><td>+27</td></tr>
+<tr><td>6</td><td class="tn">Rabbitohs</td><td>2</td><td>1</td><td>0</td><td><strong>4</strong></td><td>+78</td></tr>
+<tr><td>7</td><td class="tn">Knights</td><td>2</td><td>1</td><td>0</td><td><strong>4</strong></td><td>+76</td></tr>
+<tr><td>8</td><td class="tn">Eels</td><td>2</td><td>1</td><td>0</td><td><strong>4</strong></td><td>+74</td></tr>
+<tr><td>9</td><td class="tn">Sharks</td><td>1</td><td>2</td><td>0</td><td><strong>2</strong></td><td>+66</td></tr>
+<tr><td>10</td><td class="tn">Sea Eagles</td><td>1</td><td>1</td><td>0</td><td><strong>2</strong></td><td>+65</td></tr>
+<tr><td>11</td><td class="tn">Wests Tigers</td><td>1</td><td>2</td><td>0</td><td><strong>2</strong></td><td>-2</td></tr>
+<tr><td>12</td><td class="tn">Cowboys</td><td>1</td><td>2</td><td>0</td><td><strong>2</strong></td><td>+88</td></tr>
+<tr><td>13</td><td class="tn">Broncos</td><td>1</td><td>2</td><td>0</td><td><strong>2</strong></td><td>+80</td></tr>
+<tr><td>14</td><td class="tn">Raiders</td><td>1</td><td>2</td><td>0</td><td><strong>2</strong></td><td>+82</td></tr>
+<tr><td>15</td><td class="tn">Roosters</td><td>1</td><td>2</td><td>0</td><td><strong>2</strong></td><td>+48</td></tr>
+<tr><td>16</td><td class="tn">Dragons</td><td>0</td><td>3</td><td>0</td><td><strong>0</strong></td><td>+91</td></tr>
+<tr><td>17</td><td class="tn">Titans</td><td>0</td><td>3</td><td>0</td><td><strong>0</strong></td><td>+98</td></tr>
+</tbody></table></div>
+<div class="cd"><h3>AFL — Round 1 (Opening Round)</h3>
+<div class="ml"><span class="tm">Carlton vs Richmond</span><span class="sc">75-71</span><span class="ti">Wed 12 Mar</span></div>
+<div class="ml"><span class="tm">Essendon vs Hawthorn</span><span class="sc">83-145</span><span class="ti">Fri 14 Mar</span></div>
+<div class="ml"><span class="tm">Western Bulldogs vs GWS</span><span class="sc">134-53</span><span class="ti">Sat 15 Mar</span></div>
+<div class="ml"><span class="tm">Geelong vs Fremantle</span><span class="sc">110-100</span><span class="ti">Sat 15 Mar</span></div>
+<div class="ml"><span class="tm">Sydney vs Brisbane</span><span class="sc">104-60</span><span class="ti">Sat 15 Mar</span></div>
+<div class="ml"><span class="tm">Collingwood vs Adelaide</span><span class="sc">79-93</span><span class="ti">Sat 15 Mar</span></div>
+<div class="ml"><span class="tm">North Melbourne vs Port Adelaide</span><span class="sc">113-67</span><span class="ti">Sun 16 Mar</span></div>
+<div class="ml"><span class="tm">Melbourne vs St Kilda</span><span class="sc">120-107</span><span class="ti">Sun 16 Mar</span></div>
+<div class="ml"><span class="tm">Gold Coast vs West Coast</span><span class="sc">131-72</span><span class="ti">Sun 16 Mar</span></div>
+<table class="st"><thead><tr><th>#</th><th>Team</th><th>W</th><th>L</th><th>D</th><th>Pts</th><th>+/-</th></tr></thead><tbody>
+<tr><td>1</td><td class="tn">Sydney Swans</td><td>2</td><td>0</td><td>0</td><td><strong>8</strong></td><td>182.9%</td></tr>
+<tr><td>2</td><td class="tn">Gold Coast Suns</td><td>2</td><td>0</td><td>0</td><td><strong>8</strong></td><td>181.6%</td></tr>
+<tr><td>3</td><td class="tn">Western Bulldogs</td><td>2</td><td>0</td><td>0</td><td><strong>8</strong></td><td>154.1%</td></tr>
+<tr><td>4</td><td class="tn">North Melbourne</td><td>1</td><td>0</td><td>0</td><td><strong>4</strong></td><td>168.7%</td></tr>
+<tr><td>5</td><td class="tn">Adelaide Crows</td><td>1</td><td>0</td><td>0</td><td><strong>4</strong></td><td>117.7%</td></tr>
+<tr><td>6</td><td class="tn">Hawthorn</td><td>1</td><td>1</td><td>0</td><td><strong>4</strong></td><td>117.1%</td></tr>
+<tr><td>7</td><td class="tn">Melbourne</td><td>1</td><td>0</td><td>0</td><td><strong>4</strong></td><td>112.1%</td></tr>
+<tr><td>8</td><td class="tn">Carlton</td><td>1</td><td>1</td><td>0</td><td><strong>4</strong></td><td>70.9%</td></tr>
+<tr><td>9</td><td class="tn">Geelong</td><td>1</td><td>1</td><td>0</td><td><strong>4</strong></td><td>79.6%</td></tr>
+<tr><td>10</td><td class="tn">Collingwood</td><td>1</td><td>1</td><td>0</td><td><strong>4</strong></td><td>98.7%</td></tr>
+<tr><td>11</td><td class="tn">GWS Giants</td><td>1</td><td>1</td><td>0</td><td><strong>4</strong></td><td>76.4%</td></tr>
+<tr><td>12</td><td class="tn">Richmond</td><td>0</td><td>1</td><td>0</td><td><strong>0</strong></td><td>94.7%</td></tr>
+<tr><td>13</td><td class="tn">Fremantle</td><td>0</td><td>1</td><td>0</td><td><strong>0</strong></td><td>90.9%</td></tr>
+<tr><td>14</td><td class="tn">St Kilda</td><td>0</td><td>1</td><td>0</td><td><strong>0</strong></td><td>87.4%</td></tr>
+<tr><td>15</td><td class="tn">Brisbane Lions</td><td>0</td><td>2</td><td>0</td><td><strong>0</strong></td><td>77.2%</td></tr>
+<tr><td>16</td><td class="tn">Port Adelaide</td><td>0</td><td>1</td><td>0</td><td><strong>0</strong></td><td>59.3%</td></tr>
+<tr><td>17</td><td class="tn">Essendon</td><td>0</td><td>1</td><td>0</td><td><strong>0</strong></td><td>57.2%</td></tr>
+<tr><td>18</td><td class="tn">West Coast</td><td>0</td><td>1</td><td>0</td><td><strong>0</strong></td><td>55.0%</td></tr>
+</tbody></table></div>
+<div class="cd"><h3>Premier League — Matchweek 31</h3>
+<div class="ml"><span class="tm">Bournemouth vs Man Utd</span><span class="sc">2-2</span><span class="ti">Sat 21 Mar</span></div>
+<div class="ml"><span class="tm">Brighton vs Liverpool</span><span class="sc">2-1</span><span class="ti">Sat 21 Mar</span></div>
+<div class="ml"><span class="tm">Fulham vs Burnley</span><span class="sc">3-1</span><span class="ti">Sun 22 Mar</span></div>
+<div class="ml"><span class="tm">Everton vs Chelsea</span><span class="sc">3-0</span><span class="ti">Sun 22 Mar</span></div>
+<div class="ml"><span class="tm">Leeds vs Brentford</span><span class="sc">0-0</span><span class="ti">Sun 22 Mar</span></div>
+<div class="ml"><span class="tm">Newcastle vs Sunderland</span><span class="sc">1-2</span><span class="ti">Sun 22 Mar</span></div>
+<div class="ml"><span class="tm">Aston Villa vs West Ham</span><span class="sc">2-0</span><span class="ti">Mon 23 Mar</span></div>
+<div class="ml"><span class="tm">Spurs vs Nottingham Forest</span><span class="sc">0-3</span><span class="ti">Mon 23 Mar</span></div>
+<div class="ml"><span class="tm">Man City vs Crystal Palace</span><span class="sc">Postponed</span><span class="ti">TBC</span></div>
+<table class="st"><thead><tr><th>#</th><th>Team</th><th>W</th><th>L</th><th>D</th><th>Pts</th><th>+/-</th></tr></thead><tbody>
+<tr><td>1</td><td class="tn">Arsenal</td><td>21</td><td>7</td><td>3</td><td><strong>70</strong></td><td>+39</td></tr>
+<tr><td>2</td><td class="tn">Man City</td><td>20</td><td>9</td><td>2</td><td><strong>62</strong></td><td>+27</td></tr>
+<tr><td>3</td><td class="tn">Man Utd</td><td>19</td><td>9</td><td>3</td><td><strong>60</strong></td><td>+21</td></tr>
+<tr><td>4</td><td class="tn">Aston Villa</td><td>17</td><td>11</td><td>3</td><td><strong>54</strong></td><td>+14</td></tr>
+<tr><td>5</td><td class="tn">Liverpool</td><td>17</td><td>14</td><td>0</td><td><strong>51</strong></td><td>+11</td></tr>
+<tr><td>6</td><td class="tn">Chelsea</td><td>14</td><td>14</td><td>3</td><td><strong>45</strong></td><td>+1</td></tr>
+<tr><td>7</td><td class="tn">Brentford</td><td>13</td><td>16</td><td>2</td><td><strong>41</strong></td><td>-7</td></tr>
+<tr><td>8</td><td class="tn">Everton</td><td>12</td><td>16</td><td>3</td><td><strong>39</strong></td><td>-3</td></tr>
+<tr><td>9</td><td class="tn">Fulham</td><td>12</td><td>16</td><td>3</td><td><strong>39</strong></td><td>-2</td></tr>
+<tr><td>10</td><td class="tn">Brighton</td><td>11</td><td>18</td><td>2</td><td><strong>35</strong></td><td>-12</td></tr>
+<tr><td>11</td><td class="tn">Sunderland</td><td>10</td><td>19</td><td>2</td><td><strong>32</strong></td><td>-17</td></tr>
+<tr><td>12</td><td class="tn">Newcastle</td><td>9</td><td>20</td><td>2</td><td><strong>29</strong></td><td>-17</td></tr>
+<tr><td>13</td><td class="tn">Bournemouth</td><td>8</td><td>18</td><td>5</td><td><strong>29</strong></td><td>-14</td></tr>
+<tr><td>14</td><td class="tn">Crystal Palace</td><td>8</td><td>20</td><td>3</td><td><strong>27</strong></td><td>-20</td></tr>
+<tr><td>15</td><td class="tn">Leeds</td><td>6</td><td>23</td><td>2</td><td><strong>20</strong></td><td>-32</td></tr>
+<tr><td>16</td><td class="tn">Nott'm Forest</td><td>6</td><td>23</td><td>2</td><td><strong>20</strong></td><td>-32</td></tr>
+<tr><td>17</td><td class="tn">Spurs</td><td>6</td><td>24</td><td>1</td><td><strong>19</strong></td><td>-40</td></tr>
+<tr><td>18</td><td class="tn">West Ham</td><td>5</td><td>25</td><td>1</td><td><strong>16</strong></td><td>-42</td></tr>
+<tr><td>19</td><td class="tn">Burnley</td><td>4</td><td>25</td><td>2</td><td><strong>14</strong></td><td>-52</td></tr>
+<tr><td>20</td><td class="tn">Wolves</td><td>4</td><td>26</td><td>1</td><td><strong>13</strong></td><td>-53</td></tr>
+</tbody></table></div>
+</section>
+<section id="events"><div class="sh"><h2>🎉 Sydney This Week</h2></div>
+<div class="ec"><h3>Korean Festival — Tumbalong Park, Darling Harbour</h3><div class="ed">Sat 28 Mar (10am–9pm) & Sun 29 Mar (10am–7pm). K-pop performances, Korean BBQ, traditional arts, dance workshops, and street food. Free entry.</div><div class="ep">🍺 Nearby: The Watershed Hotel or Bluestone Bar in Darling Quarter for post-festival beers.</div></div>
+<div class="ec"><h3>ASBK Night Race — Sydney Motorsport Park, Eastern Creek</h3><div class="ed">Fri 27–Sat 28 Mar. Australia's premier superbike series under lights — 138 light towers illuminating the track for night racing. Loud, fast, and spectacular.</div><div class="ep">🍺 Nearby: Rooty Hill RSL for a counter meal and cold schooner after the race.</div></div>
+<div class="ec"><h3>Bartiga Bali Takeover — Double Bay</h3><div class="ed">Fri 27 & Sat 28 Mar. Head chefs from top Bali restaurants take over Bartiga's kitchen for two nights only. Limited seats — book ahead.</div><div class="ep">🍺 Nearby: The Royal Oak Double Bay or Golden Sheaf for pre-dinner drinks.</div></div>
+<div class="ec"><h3>Counting Crows — Enmore Theatre</h3><div class="ed">Sun 29 & Mon 30 Mar. The '90s legends bring their hits to the Enmore. If you grew up on 'Mr. Jones', this is a nostalgia trip worth taking.</div><div class="ep">🍺 Nearby: The Henson (Marrickville) or Enmore Hotel for pre-show pints.</div></div>
+<div class="ec"><h3>NRL Round 4 — Live in Sydney</h3><div class="ed">Check NRL.com for Round 4 fixtures. Multiple games at Accor Stadium, CommBank Stadium, and other Sydney venues throughout the weekend.</div><div class="ep">🍺 Nearby: Whatever your nearest local is. Nothing beats footy and a schooner.</div></div>
+</section>
+<section id="worth-knowing"><div class="sh"><h2>🧠 Things Worth Knowing</h2></div><div class="cd"><p><strong>The AI Accountability Act is your next pitch deck slide.</strong> Every SMB client you speak to this week should hear: 'The US just mandated AI bias audits. Australia will likely follow within 12-18 months. Let's get ahead of it.' This is exactly the kind of regulatory catalyst that turns 'nice to have' AI consulting into 'need to have.'</p><p><strong>The Hormuz crisis has a clock on it.</strong> Trump's 48-hour ultimatum expires Wednesday. Whatever happens — diplomacy or escalation — markets will react sharply. If you're going to make any moves on your watchlist, set your price alerts now and have your order ready. Don't try to time it live.</p><p><strong>The RBA's next meeting is May 19-20.</strong> If you're thinking about property, locking in a rate now before a potential 4.35% could save you money. If you're happy renting, the rate hikes are actually helping your cash savings earn more while you wait for better market entry points on equities.</p><p><strong>Apple's Siri overhaul is your marketing angle.</strong> When Apple makes AI mainstream, every small business owner starts asking 'why can't my business do that?' Be ready with the answer.</p></div></section>
+<div class="src"><strong>Sources:</strong> Google Finance, Trading Economics, Reuters, Al Jazeera, ABC News, NRL.com, AFL.com.au, PremierLeague.com, RBA.gov.au, Canstar, Property Update, The White House, MarketingProfs, Timeout Sydney</div>
+</div>
+<script>
+const dots=document.querySelectorAll('.ndot'),secs=document.querySelectorAll('section');
+const obs=new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting){dots.forEach(d=>d.classList.remove('active'));const dot=document.querySelector(`.ndot[data-section="${en.target.id}"]`);if(dot)dot.classList.add('active');}});},{threshold:.3});
+secs.forEach(s=>obs.observe(s));
+dots.forEach(d=>{d.addEventListener('click',()=>{const t=document.getElementById(d.dataset.section);if(t)t.scrollIntoView({behavior:'smooth'});});});
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script>
+</body></html>
